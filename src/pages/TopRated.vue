@@ -34,6 +34,5 @@ fetchMovies();
 </script>
 
 <template>
-  <div v-if="loading">Loading...</div>
-  <movie-list v-if="movies.length > 0" :movies="movies" header="Top Rated" />
+  <movie-list v-if="movies.length > 0" :movies="movies" header="Top Rated" :loading="loading"  />
 </template>

@@ -30,10 +30,11 @@ const fetchMovies = async () => {
   }
 };
 
+
 fetchMovies();
 </script>
 
 <template>
-<div v-if="loading">Loading...</div>
-  <movie-list v-if="movies.length > 0" :movies="movies" header="Popular" />
+  <h1 class="text-center text-3xl font-bold" v-if="loading">Loading...</h1>
+  <movie-list v-if="movies.length > 0" :movies="movies" header="Popular" :loading="loading" />
 </template>

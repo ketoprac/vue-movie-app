@@ -1,7 +1,8 @@
 <script setup>
 import { Heart, Star } from "lucide-vue-next";
 
-const props = defineProps(["movies", "header"]);
+const props = defineProps(["movies", "header", "loading"]);
+const { movies, header, loading } = props;
 
 const getPosterUrl = (posterPath) => {
   return `https://image.tmdb.org/t/p/w300${posterPath}`;
@@ -10,15 +11,18 @@ const getPosterUrl = (posterPath) => {
 const detailId = (id) => {
   return `/movie/${id}`;
 };
+
+console.log("loading", loading);
 </script>
 
 <template>
-  <h1>{{ header }}</h1>
+  <h1 class="text-center text-3xl font-bold">{{ header }}</h1>
+  <h1 class="text-center text-3xl font-bold" v-if="loading">Loading...</h1>
   <ul
     className="p-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-8/12 mx-auto"
   >
     <li
-      class="border mb-2 p-3 shadow hover:bg-gray-100"
+      class="border mb-2 p-3 shadow hover:bg-gray-100 rounded-3xl"
       v-for="movie in movies"
     >
       <img
@@ -32,7 +36,6 @@ const detailId = (id) => {
         class="text-xl font-bold cursor-pointer"
         >{{ movie.title }}</a
       >
-      <p class="text-gray-600 text-sm">{{ movie.overview }}</p>
       <div class="flex justify-between">
         <div class="font-bold flex items-center gap-x-1">
           <Star class="fill-yellow-400 text-yellow-400 h-4 w-5" />

@@ -1,26 +1,55 @@
 <script setup>
 import { AlignJustify, Clapperboard, X } from "lucide-vue-next";
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
+import { useRoute } from "vue-router";
+
+const router = useRoute();
+
+  console.log(router.fullPath);
 
 const showMenu = ref(false);
+
+onMounted(() => {
+  console.log(router.fullPath);
+});
+
+watch(() => router.fullPath, (newPath) => {
+  console.log("Route changed:", newPath);
+});
 
 const toggleMenu = () => {
   showMenu.value = !showMenu.value
 }
 
+const routes = [
+  {
+    title: "Now Playing",
+    link: "/"
+  },
+  {
+    title: "Popular",
+    link: "/popular"
+  },
+  {
+    title: "Top Rated",
+    link: "/top-rated"
+  },
+  {
+    title: "Upcoming",
+    link: "/upcoming"
+  },
+]
+
 </script>
 
 <template>
-  <nav class="border-b flex justify-between py-3 lg:px-12 px-6">
+  <nav class="border-b flex justify-between items-center py-3 lg:px-32 px-6">
     <div class="flex items-center gap-x-2 font-bold text-xl">
       <Clapperboard class="fill-slate-500" />
       <router-link to="/">Vue Movie</router-link>
     </div>
-    <div class="lg:flex gap-x-2 hidden lg:visible">
-      <router-link to="/">Now Playing</router-link>
-      <router-link to="/popular">Popular</router-link>
-      <router-link to="/top-rated">Top Rated</router-link>
-      <router-link to="/upcoming">Upcoming</router-link>
+    <div class="lg:flex gap-x-4 hidden lg:visible text-sm">
+      <router-link class="py-2" :class="{ 'font-semibold border-b border-black': router.fullPath === route.link }" v-for='route in routes' :to='route.link'>{{ route.title }}</router-link>
     </div>
     <div class="lg:flex items-center gap-x-1 hidden lg:visible">
       <router-link to="/sign-in">
