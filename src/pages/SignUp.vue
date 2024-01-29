@@ -1,9 +1,9 @@
 <script setup>
-  import { SignIn } from "vue-clerk";
+  import { SignUp } from "vue-clerk";
 </script>
 
 <template>
   <div class="flex items-center justify-center min-h-screen">
-    <SignIn afterSignInUrl="/" signUpUrl="/sign-up" />
+    <SignUp afterSignUpUrl="/" signInUrl="/sign-in" />
   </div>
 </template>

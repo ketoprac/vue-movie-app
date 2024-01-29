@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import MovieList from "@/components/movie-list.vue";
+import MovieListSkeleton from "@/components/movie-list-skeleton.vue";
 
 const movies = ref([]);
 const loading = ref(false);
@@ -26,15 +27,21 @@ const fetchMovies = async () => {
   } catch (error) {
     console.error(error);
   } finally {
-    loading.value = false;
+    setTimeout(() => {
+      loading.value = false;
+    }, 1000);
   }
 };
-
 
 fetchMovies();
 </script>
 
 <template>
-  <h1 class="text-center text-3xl font-bold" v-if="loading">Loading...</h1>
-  <movie-list v-if="movies.length > 0" :movies="movies" header="Popular" :loading="loading" />
+  <MovieListSkeleton v-if="loading" />
+  <MovieList
+    v-if="movies.length > 0 && !loading"
+    :movies="movies"
+    header="Popular"
+    :loading="loading"
+  />
 </template>

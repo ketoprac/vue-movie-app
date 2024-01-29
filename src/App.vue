@@ -5,6 +5,5 @@ import SearchBar from "./components/search-bar.vue";
 
 <template>
   <Navbar />
-  <SearchBar />
   <RouterView />
 </template>

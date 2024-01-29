@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import { Heart } from "lucide-vue-next";
 
 const route = useRoute();
 const id = route.params.id;
@@ -25,7 +26,6 @@ const fetchMovieDetail = async () => {
     );
     const data = await res.json();
     movie.value = data;
-    console.log(movie.value);
   } catch (error) {
     console.error(error);
   } finally {
@@ -47,12 +47,30 @@ const getPosterUrl = (posterPath) => {
 const getGenres = (genres) => {
   return genres.map((genre) => genre.name).toString();
 };
+
+const director = movie.value.credits?.crew.find(
+  (member) => member.job === "Director"
+);
+
+const convertToHour = (time) => {
+  const hours = Math.floor(time/60);
+  const minutes = time % 60;
+  return `${hours}h ${minutes}m`;
+}
+
+console.log(convertToHour(142));
+
+if (director) {
+  console.log(director.name); // Output: Christopher Nolan
+} else {
+  console.log("Director not found");
+}
 </script>
 
 <template>
   <div class="mx-32">
     <div
-      class="w-full bg-auto bg-no-repeat bg-center rounded-3xl overflow-hidden"
+      class="w-full bg-auto bg-no-repeat bg-center rounded-3xl overflow-hidden mt-12"
       :style="{
         'background-image':
           'url(https://image.tmdb.org/t/p/w1280' + movie.backdrop_path + ')',
@@ -94,28 +112,16 @@ const getGenres = (genres) => {
                 class="group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-tiny gap-unit-2 rounded-small px-unit-0 !gap-unit-0 data-[pressed=true]:scale-[0.97] transition-transform-colors motion-reduce:transition-none bg-default text-default-foreground min-w-unit-8 w-unit-8 h-unit-8 z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased"
                 type="button"
                 aria-expanded="false"
-                title="Rate movie"
+                title="Save movie"
               >
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 1024 1024"
-                  height="18"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3zM664.8 561.6l36.1 210.3L512 672.7 323.1 772l36.1-210.3-152.8-149L417.6 382 512 190.7 606.4 382l211.2 30.7-152.8 148.9z"
-                  ></path>
-                </svg>
+                <Heart class="text-white hover:fill-red-900 h-6 w-6" />
               </button>
             </div>
             <p>
               <span>{{ movie.release_date }}</span
               ><span class="px-2">•</span
               ><span>{{ getGenres(movie.genres) }}</span
-              ><span class="px-2">•</span><span>{{ movie.runtime }}m</span>
+              ><span class="px-2">•</span><span>{{ convertToHour(movie.runtime) }}</span>
             </p>
             <p class="font-bold text-xl mt-8 mb-2">Overview</p>
             <p>
@@ -123,7 +129,7 @@ const getGenres = (genres) => {
             </p>
             <div class="flex flex-col md:flex-row gap-y-6 gap-x-32 mt-8">
               <div>
-                <p class="font-bold">Nia DaCosta</p>
+                <p class="font-bold">{{ director }}</p>
                 <p>Director</p>
               </div>
             </div>
