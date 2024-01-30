@@ -1,5 +1,5 @@
 <template>
-  <div className="h-10 bg-gray-600 mt-6 mb-4 px-2 w-36 mx-auto"></div>
+  <div className="h-8 bg-gray-600 mt-6 mb-4 px-2 w-36 mx-auto animate-pulse"></div>
   <ul
     className="p-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-8/12 mx-auto"
   >

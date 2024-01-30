@@ -1,3 +1,4 @@
+import SavedVue from "@/pages/Saved.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const Popular = () => import("@/pages/Popular.vue");
@@ -8,6 +9,7 @@ const SignIn = () => import("@/pages/SignIn.vue");
 const SignUp = () => import("@/pages/SignUp.vue");
 const MovieDetail = () => import("@/pages/MovieDetail.vue");
 const UserProfile = import('@/pages/UserProfile.vue');
+const Saved = () => import('@/pages/Saved.vue');
 
 const routes = [
   { path: "/", component: NowPlaying, meta: { title: 'Now Playing | Vue Movie'} },
@@ -18,6 +20,7 @@ const routes = [
   { path: "/sign-up", component: SignUp },
   { path: "/movie/:id", component: MovieDetail },
   { path: "/profile", component: UserProfile },
+  { path: "/saved", component: Saved },
 ];
 
 const router = createRouter({
