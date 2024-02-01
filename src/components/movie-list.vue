@@ -1,5 +1,12 @@
 <script setup>
+import { useAuth } from "vue-clerk";
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 import { Heart, Star } from "lucide-vue-next";
+
+const router = useRouter();
+const toast = useToast();
+const { isSignedIn } = useAuth();
 
 const props = defineProps(["movies", "header"]);
 const { movies, header } = props;
@@ -12,17 +19,38 @@ const detailId = (id) => {
   return `/movie/${id}`;
 };
 
+let savedMovies = JSON.parse(localStorage.getItem("saved-movies")) || [];
+
 const saveMovie = (movie) => {
+  if (!isSignedIn.value) {
+    return router.push("/sign-in");
+  }
+
   const { id, title, poster_path, vote_average } = movie;
   const payload = { id, title, poster_path, vote_average };
 
-  let savedMovies = JSON.parse(localStorage.getItem("saved-movies")) || [];
-  savedMovies.push(payload);
+  const movieExists = savedMovies.some((savedMovie) => savedMovie.id === id);
 
-  localStorage.setItem("saved-movies", JSON.stringify(savedMovies));
-
-  console.log("Movie saved successfully!");
+  if (movieExists) {
+    // Remove movie from savedMovies
+    savedMovies = savedMovies.filter((savedMovie) => savedMovie.id !== id);
+    localStorage.setItem("saved-movies", JSON.stringify(savedMovies));
+    toast.success("Removed");
+  } else {
+    // Add movie to savedMovies
+    savedMovies.push(payload);
+    localStorage.setItem("saved-movies", JSON.stringify(savedMovies));
+    toast.success("Saved");
+  }
 };
+
+const isMovieSaved = (id) => {
+  return savedMovies.some((movie) => movie.id === id);
+}
+
+defineOptions({
+  inheritAttrs: false,
+});
 </script>
 
 <template>
@@ -40,6 +68,7 @@ const saveMovie = (movie) => {
     <li
       class="border border-gray-600 mb-2 p-3 shadow hover:bg-gray-900 rounded-xl bg-black text-white"
       v-for="movie in movies"
+      :key="movie.id"
     >
       <img
         className="mx-auto mb-2"
@@ -58,7 +87,7 @@ const saveMovie = (movie) => {
           <p>{{ movie.vote_average.toFixed(1) }} / 10</p>
         </div>
         <button @click="saveMovie(movie)">
-          <Heart class="text-gray-600 hover:fill-red-500 h-6 w-6" />
+          <Heart class="text-gray-50 hover:fill-red-500 h-6 w-6" :class="{'fill-red-500': isMovieSaved(movie.id)}" />
         </button>
       </div>
     </li>

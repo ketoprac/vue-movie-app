@@ -58,7 +58,11 @@ const convertToHour = (time) => {
   return `${hours}h ${minutes}m`;
 }
 
-console.log(convertToHour(142));
+let savedMovies = JSON.parse(localStorage.getItem("saved-movies")) || [];
+
+const isMovieSaved = (id) => {
+  return savedMovies.some((movie) => movie.id === id);
+}
 
 if (director) {
   console.log(director.name); // Output: Christopher Nolan
@@ -114,7 +118,7 @@ if (director) {
                 aria-expanded="false"
                 title="Save movie"
               >
-                <Heart class="text-white hover:fill-red-900 h-6 w-6" />
+                <Heart class="text-gray-50 hover:fill-red-500 h-6 w-6" :class="{'fill-red-500': isMovieSaved(movie.id)}" />
               </button>
             </div>
             <p>
