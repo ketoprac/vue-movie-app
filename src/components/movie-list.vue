@@ -46,7 +46,7 @@ const saveMovie = (movie) => {
 
 const isMovieSaved = (id) => {
   return savedMovies.some((movie) => movie.id === id);
-}
+};
 
 defineOptions({
   inheritAttrs: false,
@@ -76,7 +76,6 @@ defineOptions({
         :alt="movie.title"
       />
       <a
-        target="_blank"
         :href="detailId(movie.id)"
         class="text-lg font-bold cursor-pointer tracking-wider"
         >{{ movie.title }}</a
@@ -87,7 +86,10 @@ defineOptions({
           <p>{{ movie.vote_average.toFixed(1) }} / 10</p>
         </div>
         <button @click="saveMovie(movie)">
-          <Heart class="text-gray-50 hover:fill-red-500 h-6 w-6" :class="{'fill-red-500': isMovieSaved(movie.id)}" />
+          <Heart
+            class="text-gray-50 hover:fill-red-500 h-6 w-6"
+            :class="{ 'fill-red-500': isMovieSaved(movie.id) }"
+          />
         </button>
       </div>
     </li>

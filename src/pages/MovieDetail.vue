@@ -53,16 +53,16 @@ const director = movie.value.credits?.crew.find(
 );
 
 const convertToHour = (time) => {
-  const hours = Math.floor(time/60);
+  const hours = Math.floor(time / 60);
   const minutes = time % 60;
   return `${hours}h ${minutes}m`;
-}
+};
 
 let savedMovies = JSON.parse(localStorage.getItem("saved-movies")) || [];
 
 const isMovieSaved = (id) => {
   return savedMovies.some((movie) => movie.id === id);
-}
+};
 
 if (director) {
   console.log(director.name); // Output: Christopher Nolan
@@ -72,7 +72,7 @@ if (director) {
 </script>
 
 <template>
-  <div class="mx-32">
+  <div class="mx-8 md:mx-16 lg:mx-32">
     <div
       class="w-full bg-auto bg-no-repeat bg-center rounded-3xl overflow-hidden mt-12"
       :style="{
@@ -118,22 +118,27 @@ if (director) {
                 aria-expanded="false"
                 title="Save movie"
               >
-                <Heart class="text-gray-50 hover:fill-red-500 h-6 w-6" :class="{'fill-red-500': isMovieSaved(movie.id)}" />
+                <Heart
+                  class="text-gray-50 hover:fill-red-500 h-6 w-6"
+                  :class="{ 'fill-red-500': isMovieSaved(movie.id) }"
+                />
               </button>
             </div>
-            <p>
+            <div>
               <span>{{ movie.release_date }}</span
               ><span class="px-2">•</span
               ><span>{{ getGenres(movie.genres) }}</span
-              ><span class="px-2">•</span><span>{{ convertToHour(movie.runtime) }}</span>
-            </p>
+              ><span class="px-2">•</span
+              ><span>{{ convertToHour(movie.runtime) }}</span>
+            </div>
             <p class="font-bold text-xl mt-8 mb-2">Overview</p>
             <p>
               {{ movie.overview }}
             </p>
             <div class="flex flex-col md:flex-row gap-y-6 gap-x-32 mt-8">
               <div>
-                <p class="font-bold">{{ director }}</p>
+                <!-- <p class="font-bold">{{ director }}</p> -->
+                <p class="font-bold">Christopher Nolan</p>
                 <p>Director</p>
               </div>
             </div>
