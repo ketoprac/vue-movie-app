@@ -66,12 +66,12 @@ defineOptions({
     className="p-0 md:p-1 lg:p-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-8/12 mx-auto"
   >
     <li
-      class="border border-gray-600 mb-2 p-3 shadow hover:bg-gray-900 rounded-xl bg-black text-white"
+      class="border border-gray-600 mb-2 p-3 shadow hover:bg-gray-900 rounded-3xl bg-black text-white"
       v-for="movie in movies"
       :key="movie.id"
     >
       <img
-        className="mx-auto mb-2"
+        className="mx-auto mb-2 rounded-3xl"
         :src="getPosterUrl(movie.poster_path)"
         :alt="movie.title"
       />

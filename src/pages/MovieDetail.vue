@@ -8,6 +8,7 @@ const id = route.params.id;
 
 const movie = ref([]);
 const loading = ref(false);
+const director = ref("");
 
 const options = {
   method: "GET",
@@ -26,6 +27,14 @@ const fetchMovieDetail = async () => {
     );
     const data = await res.json();
     movie.value = data;
+    director.value = movie.value.credits.crew.find(
+      (member) => member.job === "Director"
+    ).name;
+    console.log("Movie Detail: ", movie.value);
+    console.log(
+      "Director: ",
+      movie.value.credits.crew.find((member) => member.job === "Director").name
+    );
   } catch (error) {
     console.error(error);
   } finally {
@@ -48,10 +57,6 @@ const getGenres = (genres) => {
   return genres.map((genre) => genre.name).toString();
 };
 
-const director = movie.value.credits?.crew.find(
-  (member) => member.job === "Director"
-);
-
 const convertToHour = (time) => {
   const hours = Math.floor(time / 60);
   const minutes = time % 60;
@@ -63,12 +68,6 @@ let savedMovies = JSON.parse(localStorage.getItem("saved-movies")) || [];
 const isMovieSaved = (id) => {
   return savedMovies.some((movie) => movie.id === id);
 };
-
-if (director) {
-  console.log(director.name); // Output: Christopher Nolan
-} else {
-  console.log("Director not found");
-}
 </script>
 
 <template>
@@ -137,8 +136,7 @@ if (director) {
             </p>
             <div class="flex flex-col md:flex-row gap-y-6 gap-x-32 mt-8">
               <div>
-                <!-- <p class="font-bold">{{ director }}</p> -->
-                <p class="font-bold">Christopher Nolan</p>
+                <p class="font-bold">{{ director }}</p>
                 <p>Director</p>
               </div>
             </div>
