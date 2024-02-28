@@ -72,7 +72,7 @@ defineOptions({
     >
       <img
         className="mx-auto mb-2 rounded-3xl"
-        :src="getPosterUrl(movie.poster_path)"
+        v-lazy="getPosterUrl(movie.poster_path)"
         :alt="movie.title"
       />
       <a

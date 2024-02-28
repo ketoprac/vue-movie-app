@@ -85,8 +85,10 @@ const routes = [
     <div v-else class="lg:flex items-center gap-x-4 hidden lg:visible">
       <router-link to="/saved" v-if="isSignedIn">
         <div className="flex">
-          <Heart  class="text-gray-200 fill-red h-6 w-6"/>
-          <div className="flex items-center justify-center -ml-2 bg-green-600 text-white text-center font-bold rounded-full w-3 h-3 text-[8px]">
+          <Heart class="text-gray-200 fill-red h-6 w-6" />
+          <div
+            className="flex items-center justify-center -ml-2 bg-green-600 text-white text-center font-bold rounded-full w-3 h-3 text-[8px]"
+          >
             {{ moviesCount }}
           </div>
         </div>
@@ -113,31 +115,33 @@ const routes = [
   </nav>
   <div
     v-if="showMenu"
-    class="lg:hidden flex flex-col py-3 px-5 gap-y-1 bg-gray-900 text-white"
+    class="lg:hidden flex flex-col py-3 px-5 gap-y-2 bg-gray-900 text-white text-center text-xl tracking-wider font-sem"
   >
     <router-link to="/">Now Playing</router-link>
     <router-link to="/popular">Popular</router-link>
     <router-link to="/top-rated">Top Rated</router-link>
     <router-link to="/upcoming">Upcoming</router-link>
     <router-link to="/profile" v-if="isSignedIn">
-        <button
-          class="text-xs font-semibold text-white rounded bg-green-600 px-4 py-2 tracking-wider"
-        >
-          Profile
-        </button>
-      </router-link>
+      <button
+        class="text-sm font-semibold text-white rounded bg-green-600 px-4 py-2 tracking-wider w-full"
+      >
+        Profile
+      </button>
+    </router-link>
     <router-link to="/sign-in" v-if="!isSignedIn">
-        <button
-          class="text-xs font-semibold text-white rounded bg-green-600 px-4 py-2 tracking-wider"
-        >
-          Sign In
-        </button>
-      </router-link>
-    <div class="flex items-center gap-x-3">
+      <button
+        class="text-sm font-semibold text-white rounded bg-green-600 px-4 py-2 tracking-wider w-full"
+      >
+        Sign In
+      </button>
+    </router-link>
+    <div class="flex items-center justify-center gap-x-3">
       <router-link to="/saved" v-if="isSignedIn">
         <div className="flex">
-          <Heart  class="text-gray-200 fill-red h-6 w-6"/>
-          <div className="flex items-center justify-center -ml-2 bg-green-600 text-white text-center font-bold rounded-full w-3 h-3 text-[8px]">
+          <Heart class="text-gray-200 fill-red h-6 w-6" />
+          <div
+            className="flex items-center justify-center -ml-2 bg-green-600 text-white text-center font-bold rounded-full w-3 h-3 text-[8px]"
+          >
             {{ moviesCount }}
           </div>
         </div>
