@@ -49,8 +49,12 @@ const getBackdropUrl = (posterPath) => {
   return `https://image.tmdb.org/t/p/original${posterPath}`;
 };
 
-const getPosterUrl = (posterPath) => {
-  return `https://image.tmdb.org/t/p/w300${posterPath}`;
+const getImageUrl = (posterPath) => {
+  if (posterPath) {
+    return `https://image.tmdb.org/t/p/w300${posterPath}`;
+  } else {
+    return "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541";
+  }
 };
 
 const getGenres = (genres) => {
@@ -94,7 +98,7 @@ const isMovieSaved = (id) => {
                   style="max-width: fit-content"
                 >
                   <img
-                    :src="getPosterUrl(movie.poster_path)"
+                    :src="getImageUrl(movie.poster_path)"
                     class="relative z-10 opacity-0 shadow-black/5 data-[loaded=true]:opacity-100 transition-transform-opacity motion-reduce:transition-none !duration-300 rounded-large w-64 shadow-2xl"
                     :alt="movie.title"
                     data-loaded="true"
@@ -105,7 +109,7 @@ const isMovieSaved = (id) => {
           </div>
           <div class="py-4 !text-white w-full">
             <div class="flex gap-x-3 items-center">
-              <h1 class="text-3xl font-bold mb-1">
+              <h1 class="text-xl lg:text-3xl font-bold mb-1">
                 {{ movie.title }}
                 <span class="font-normal"
                   >({{ movie.release_date.slice(0, 4) }})</span
@@ -140,6 +144,56 @@ const isMovieSaved = (id) => {
                 <p>Director</p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Casts -->
+    <div>
+      <h1
+        class="text-3xl font-bold mb-6 pt-6 text-[#212121] tracking-wider inline-block border-b-4 border-green-600"
+      >
+        Casts
+      </h1>
+      <!-- {{ movie.credits.cast }} -->
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-5">
+        <div
+          class="mb-2 p-5 rounded-[30px] bg-[#FAFAFA] shadow-lg text-[#212121] hover:shadow-xl transition-shadow duration-300"
+          v-for="cast in movie.credits.cast"
+        >
+          <img
+            class="w-28 h-28 mx-auto rounded-full object-cover"
+            :src="getImageUrl(cast.profile_path)"
+            :alt="cast.name"
+          />
+          <div class="text-center mt-4">
+            <p class="font-semibold text-lg">{{ cast.name }}</p>
+            <p class="text-gray-500">{{ cast.character }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Crew -->
+    <div>
+      <h1
+        class="text-3xl font-bold mb-6 pt-6 text-[#212121] tracking-wider inline-block border-b-4 border-green-600"
+      >
+        Crews
+      </h1>
+      <!-- {{ movie.credits.cast }} -->
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-5">
+        <div
+          class="mb-2 p-5 rounded-[30px] bg-[#FAFAFA] shadow-lg text-[#212121] hover:shadow-xl transition-shadow duration-300"
+          v-for="crew in movie.credits.crew"
+        >
+          <img
+            class="w-28 h-28 mx-auto rounded-full object-cover"
+            :src="getImageUrl(crew.profile_path)"
+            :alt="crew.name"
+          />
+          <div class="text-center mt-4">
+            <p class="font-semibold text-lg">{{ crew.name }}</p>
+            <p class="text-gray-500">{{ crew.department }}</p>
           </div>
         </div>
       </div>

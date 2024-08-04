@@ -15,6 +15,10 @@ const getPosterUrl = (posterPath) => {
   return `https://image.tmdb.org/t/p/w300${posterPath}`;
 };
 
+const getBackdropUrl = (posterPath) => {
+  return `https://image.tmdb.org/t/p/original${posterPath}`;
+};
+
 const detailId = (id) => {
   return `/movie/${id}`;
 };
@@ -48,14 +52,19 @@ const isMovieSaved = (id) => {
   return savedMovies.some((movie) => movie.id === id);
 };
 
+const randomNumber = Math.floor(Math.random()*10);
+
 defineOptions({
   inheritAttrs: false,
 });
 </script>
 
 <template>
+  <div>
+    <img :src="getBackdropUrl(movies[randomNumber].backdrop_path)" />
+  </div>
   <h1
-    class="text-center text-2xl font-bold px-2 pt-6 pb-2 text-white tracking-wider"
+    class="text-center text-3xl font-bold px-2 pt-6 pb-2 text-[#212121] tracking-wider"
   >
     {{ header }}
   </h1>
@@ -63,15 +72,16 @@ defineOptions({
     class="w-24 h-1 bg-gradient-to-r from-green-600 to-sky-500 mx-auto mb-4"
   ></div>
   <ul
-    className="p-0 md:p-1 lg:p-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-8/12 mx-auto"
+    className="p-0 md:p-1 lg:p-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-8/12 mx-auto"
   >
     <li
-      class="border border-gray-600 mb-2 p-3 shadow hover:bg-gray-900 rounded-3xl bg-black text-white"
+      class=" mb-2 p-5 rounded-[30px] bg-[#FAFAFA] shadow text-[#212121]"
+      v-if="movies"
       v-for="movie in movies"
       :key="movie.id"
     >
       <img
-        className="mx-auto mb-2 rounded-3xl"
+        className="mx-auto mb-2"
         v-lazy="getPosterUrl(movie.poster_path)"
         :alt="movie.title"
       />
@@ -92,6 +102,9 @@ defineOptions({
           />
         </button>
       </div>
+    </li>
+    <li v-if="!movies">
+      <p>Still Empty</p>
     </li>
   </ul>
 </template>

@@ -51,17 +51,17 @@ const routes = [
 
 <template>
   <nav
-    class="border-b border-gray-600 flex justify-between items-center py-5 lg:px-32 px-6 bg-black text-white"
+    class="flex justify-between items-center py-5 lg:px-32 px-6 bg-white text-black shadow"
   >
-    <div class="flex items-center gap-x-2 font-bold text-2xl tracking-wide">
-      <Clapperboard class="text-gray-900 fill-slate-500" />
-      <router-link to="/"
+    <div class="flex items-center gap-x-2 font-bold text-2xl tracking-tight">
+      <Clapperboard class="text-[#373737] fill-slate-100" />
+      <router-link class="text-[#373737]" to="/"
         >Vue <span class="text-green-600">Movie</span></router-link
       >
     </div>
     <div class="lg:flex gap-x-4 hidden lg:visible text-sm">
       <router-link
-        class="py-2 tracking-widest"
+        class="py-2 tracking-widest text-[#373737] font-semibold uppercase"
         :class="{
           'border-b-2 border-green-600': router.fullPath === route.link,
         }"
@@ -106,16 +106,16 @@ const routes = [
     <div class="lg:hidden">
       <button
         @click="toggleMenu"
-        class="border border-gray-600 rounded p-1 hover:bg-gray-800"
+        class="border rounded p-1 hover:bg-[#FAFAFA]"
       >
-        <AlignJustify v-if="!showMenu" class="w-5 h-5" />
-        <X v-else class="w-5 h-5" />
+        <AlignJustify v-if="!showMenu" class="w-5 h-5 fill-[#373737]" />
+        <X v-else class="w-5 h-5 fill-[#373737]" />
       </button>
     </div>
   </nav>
   <div
     v-if="showMenu"
-    class="lg:hidden flex flex-col py-3 px-5 gap-y-2 bg-gray-900 text-white text-center text-xl tracking-wider font-sem"
+    class="lg:hidden flex flex-col py-3 px-5 gap-y-2 bg-[#FAFAFA] text-[#373737] shadow text-center text-xl tracking-wider font-semibold"
   >
     <router-link to="/">Now Playing</router-link>
     <router-link to="/popular">Popular</router-link>
